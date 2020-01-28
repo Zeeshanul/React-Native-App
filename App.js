@@ -1,50 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
+import React, { Component, setState, useState, useEffect, } from 'react';
+import { Text, View, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import Cameracontrol from './cameracontrol'
 
-export default function App() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
+class App extends Component {
 
-  if (hasPermission === null) {
-    return <View />;
+  state = { val: true };
+  togglefunc = () => {
+    this.setState({ val: !this.state.val });
   }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+
+
+  //state object
+
+
+  render() {
+
+    if (this.state.val) {
+      return (
+
+        <View style={styles.camerabtn}>
+          <Button title='Start Photo Session' onPress={this.togglefunc} />
+        </View >
+      );
+    }
+
+    else {
+      console.log('Functon called')
+
+      return <Cameracontrol />
+
+    }
+
   }
-  return (
-    <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={type}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    </View>
-  );
+
 }
+const styles = StyleSheet.create({
+  camerabtn: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 30,
+    marginTop: 100,
+    flexDirection: 'row',
+    justifyContent: 'center'
+
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default App;
