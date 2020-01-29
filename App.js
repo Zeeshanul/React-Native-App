@@ -1,40 +1,40 @@
-import React, { Component, setState, useState, useEffect, } from 'react';
-import { Text, View, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Image, StyleSheet, Text, View, Button, } from 'react-native';
+import logo from './assets/icon.png';
 import Cameracontrol from './cameracontrol'
+import Camera1 from './camera.page';
+import CameraPage from './camera.page'
+import Cameracontrol1 from './camera1'
 
-
-class App extends Component {
+export default class App extends Component {
 
   state = { val: true };
   togglefunc = () => {
     this.setState({ val: !this.state.val });
   }
 
-
-  //state object
-
-
   render() {
-
     if (this.state.val) {
+      console.log('Hello')
       return (
-
         <View style={styles.camerabtn}>
           <Button title='Start Photo Session' onPress={this.togglefunc} />
         </View >
       );
     }
-
     else {
       console.log('Functon called')
+      // return <Camera1 />
+      return (
+        // <CameraPage />
+        <Cameracontrol1 />
+      );
 
-      return <Cameracontrol />
 
     }
-
   }
-
 }
+
 const styles = StyleSheet.create({
   camerabtn: {
     color: 'red',
@@ -45,9 +45,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
 
   },
-  red: {
-    color: 'red',
-  },
 });
-
-export default App;
